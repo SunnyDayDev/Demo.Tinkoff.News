@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="me.sunnydaydev.tnews.coreui.viewModel.ViewModelState"/>
+
+        <variable
+            name="bindings"
+            type="me.sunnydaydev.tnews.newslist.NewsListBindings"/>
+
+        <variable
+            name="vm"
+            type="me.sunnydaydev.tnews.newslist.vm.NewsListViewModel"/>
+
+    </data>
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NewsListActivity">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            recyclerView_items="@{vm.items}"
+            recyclerView_itemsLayoutMap="@{bindings.newsItemsMap}"
+            visible="@{vm.state == ViewModelState.CONTENT}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/newslist_item_layout" />
+
+        <androidx.constraintlayout.ConstraintLayout
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            visible="@{vm.state == ViewModelState.LOADING}"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toTopOf="@+id/progress_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/prompt_currencies_loading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressbar" />
+
+        </androidx.constraintlayout.ConstraintLayout>
+
+        <androidx.constraintlayout.ConstraintLayout
+            android:id="@+id/error"
+            visible="@{vm.state == ViewModelState.ERROR}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/error_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/prompt_error_happen"
+                app:layout_constraintBottom_toTopOf="@+id/error_retry_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <Button
+                android:id="@+id/error_retry_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/prompt_retry"
+                android:textColor="@color/palette_white"
+                onClick="@{vm::onRefresh}"
+                app:backgroundTint="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/error_text" />
+
+        </androidx.constraintlayout.ConstraintLayout>
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+</layout>

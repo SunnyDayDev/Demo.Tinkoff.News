@@ -1,0 +1,47 @@
+
+// region Apps (installable, instant, etc..)
+
+include ':app_normal'
+project(':app_normal').projectDir = new File('source/app/normal')
+
+include ':app_instant'
+project(':app_instant').projectDir = new File('source/app/instant')
+
+// endregion
+
+
+// region Core (ui, general, etc..)
+
+include ':core'
+project(':core').projectDir = new File('source/core/general')
+
+include ':core_ui'
+project(':core_ui').projectDir = new File('source/core/ui')
+
+// endregion
+
+
+// region Domain
+
+include ':domain_network'
+project(':domain_network').projectDir = new File('source/domain/network')
+
+include ':domain_news'
+project(':domain_news').projectDir = new File('source/domain/news')
+
+// endregion
+
+
+// region Features
+
+include ':feature_base'
+project(':feature_base').projectDir = new File('source/feature/base')
+
+// Navigation, etc.
+include ':feature_flow'
+project(':feature_flow').projectDir = new File('source/feature/flow')
+
+include ':feature_newsList'
+project(':feature_newsList').projectDir = new File('source/feature/newsList')
+
+// endregion

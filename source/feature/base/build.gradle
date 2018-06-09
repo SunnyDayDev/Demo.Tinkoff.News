@@ -1,0 +1,20 @@
+apply plugin: 'com.android.feature'
+
+defaultAndroidModule()
+
+android {
+
+    baseFeature true
+
+}
+
+dependencies {
+
+    application project(':app_normal')
+
+    implementation project(':core_ui')
+
+    api deps.androidx.appcompat
+    api deps.androidx.constraintLayout
+
+}

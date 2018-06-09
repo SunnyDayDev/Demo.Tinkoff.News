@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+defaultAndroidModule()
+
+dependencies {
+
+    implementation project(':core')
+    implementation project(':core_ui')
+
+    implementation project(':feature_newsList')
+
+    deps.shortcut.kotlin()
+    deps.shortcut.dagger(false)
+    deps.shortcut.rx()
+
+    implementation deps.utils.cicerone
+
+}
