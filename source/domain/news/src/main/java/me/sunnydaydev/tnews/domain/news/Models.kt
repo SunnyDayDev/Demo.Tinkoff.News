@@ -14,3 +14,12 @@ data class News(
         val publicationDate: Date,
         val bankInfoTypeId: Int
 )
+
+data class NewsContent(
+        val title: News,
+        val creationDate: Date,
+        val lastModificationDate: Date,
+        val content: String,
+        val bankInfoTypeId: Int,
+        val typeId: String
+)
