@@ -27,6 +27,6 @@ dependencies {
     implementation deps.network.retrofit
     implementation deps.network.okhttp
     implementation deps.network.rx
-    implementation deps.network.kotlinxNewsList
+    implementation deps.network.kotlinxConverter
 
 }

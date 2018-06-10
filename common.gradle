@@ -25,7 +25,7 @@ ext.versions += [
         multidex: '2.0.0',
         arch: [
             lifeCycle: '2.0.0-alpha1',
-            persistence: '2.0.0-alpha1'
+            room: '2.0.0-alpha1'
         ]
     ],
     googleServices: [
@@ -46,13 +46,13 @@ ext.versions += [
         retrofit: '2.4.0',
         okhttp: '3.10.0',
         glide: '4.7.1',
-        kotlinxNewsList: '0.0.1'
+        kotlinxConverter: '0.0.1'
     ],
     rx: [
         java: '2.1.12',
         android: '2.0.2',
         kotlin: '2.2.0',
-        modern: '1.2.0'
+        modern: '1.2.1'
     ],
     utils: [
         inputMask: '3.4.0',
@@ -114,7 +114,10 @@ ext.deps = [
             runtime: "androidx.lifecycle:lifecycle-runtime:$versions.androidx.arch.lifeCycle",
             viewModel: "androidx.lifecycle:lifecycle-viewmodel:$versions.androidx.arch.lifeCycle",
             compiler: "androidx.lifecycle:lifecycle-compiler:$versions.androidx.arch.lifeCycle",
-            extensions: "androidx.lifecycle:lifecycle-extensions:$versions.androidx.arch.lifeCycle"
+            extensions: "androidx.lifecycle:lifecycle-extensions:$versions.androidx.arch.lifeCycle",
+            room: "androidx.room:room-runtime:$versions.androidx.arch.room",
+            roomCompiler: "androidx.room:room-compiler:$versions.androidx.arch.room",
+            roomRx: "androidx.room:room-rxjava2:$versions.androidx.arch.room"
         ]
     ],
     dataBinding: [
@@ -136,7 +139,7 @@ ext.deps = [
         logging: "com.squareup.okhttp3:logging-interceptor:$versions.network.okhttp",
         glide: "com.github.bumptech.glide:glide:$versions.network.glide",
         glideCompiler: "com.github.bumptech.glide:compiler:$versions.network.glide",
-        kotlinxNewsList: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.network.kotlinxNewsList"
+        kotlinxConverter: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.network.kotlinxConverter"
     ],
     debug: [
         fabricPlugin: "io.fabric.tools:gradle:$versions.debug.fabricPlugin",
@@ -161,7 +164,8 @@ ext.deps += [
     shortcut: [
         rx: { dependenciesRx() },
         kotlin: { dependenciesKotlin() },
-        dagger: { kapt -> dependenciesDagger(kapt)}
+        dagger: { kapt -> dependenciesDagger(kapt)},
+        room: { dependenciesRoom() }
     ]
 ]
 
@@ -220,6 +224,32 @@ void dependenciesDagger(boolean useKapt) {
         if (useKapt) {
             kapt deps.core.daggerAndroidProcessor
         }
+
+    }
+
+}
+
+void dependenciesRoom() {
+
+    android {
+
+        defaultConfig {
+
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = ["room.schemaLocation": "$rootProject.projectDir/db.schemas".toString()]
+                }
+            }
+
+        }
+
+    }
+
+    dependencies {
+
+        implementation deps.androidx.arch.room
+        implementation deps.androidx.arch.roomRx
+        kapt deps.androidx.arch.roomCompiler
 
     }
 

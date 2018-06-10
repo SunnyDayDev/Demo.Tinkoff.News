@@ -23,7 +23,6 @@ dependencies {
     deps.shortcut.kotlin()
     deps.shortcut.rx()
     deps.shortcut.dagger(true)
-
-    implementation deps.debug.timber
+    deps.shortcut.room()
 
 }
