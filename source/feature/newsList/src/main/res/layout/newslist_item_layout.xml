@@ -20,16 +20,16 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        android:background="@color/palette_white">
 
         <androidx.constraintlayout.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:focusable="true"
             onClick="@{vm::onItemClicked}"
-            android:foreground="?attr/selectableItemBackground"
-            android:background="@color/palette_white"
-            tools:ignore="KeyboardInaccessibleWidget">
+            android:background="?attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/icon"
