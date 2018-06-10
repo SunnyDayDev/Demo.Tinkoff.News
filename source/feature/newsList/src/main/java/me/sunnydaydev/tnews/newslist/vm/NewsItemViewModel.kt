@@ -3,6 +3,7 @@ package me.sunnydaydev.tnews.newslist.vm
 import android.text.TextUtils
 import androidx.databinding.Bindable
 import com.github.nitrico.lastadapter.StableId
+import me.sunnydaydev.mvvmkit.observable.PureCommand
 import me.sunnydaydev.tnews.coreui.viewModel.BaseVewModel
 import me.sunnydaydev.tnews.domain.news.News
 import me.sunnydaydev.mvvmkit.observable.bindable
@@ -19,7 +20,7 @@ import javax.inject.Inject
  */
 
 internal class NewsItemViewModel(
-        private val news: News,
+        internal val news: News,
         private val stableIdProvider: StableIdProvider,
         private val router: NewsListRouter
 ): BaseVewModel(), StableId {
@@ -29,6 +30,8 @@ internal class NewsItemViewModel(
     @get:Bindable val title by bindable(TextUtils.htmlEncode(news.text)!!)
     @get:Bindable val date by bindable(formatDate(news.publicationDate))
     @get:Bindable val icon by bindable(iconUrl(news.id))
+
+    val highlightCommand = PureCommand()
 
     fun onItemClicked() {
         router.openNews(news.id)
