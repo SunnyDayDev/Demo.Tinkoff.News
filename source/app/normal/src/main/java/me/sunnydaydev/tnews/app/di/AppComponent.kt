@@ -12,6 +12,7 @@ import me.sunnydaydev.tnews.domain.news.di.NewsDomainProvider
 import me.sunnydaydev.tnews.domain.network.di.NetworkComponent
 import me.sunnydaydev.tnews.flow.di.FlowComponent
 import me.sunnydaydev.tnews.flow.di.FlowProvider
+import me.sunnydaydev.tnews.newscontent.di.NewsContentComponentRequirements
 
 /**
  * Created by sunny on 09.06.2018.
@@ -27,7 +28,8 @@ import me.sunnydaydev.tnews.flow.di.FlowProvider
         ]
 )
 interface AppComponent: Injector<App>,
-        NewsListComponentRequirements {
+        NewsListComponentRequirements,
+        NewsContentComponentRequirements{
 
     object Initializer {
 

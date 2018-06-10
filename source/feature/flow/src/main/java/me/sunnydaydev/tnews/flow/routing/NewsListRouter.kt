@@ -13,8 +13,8 @@ internal class NewsListRouterImpl @Inject constructor(
         private val router: Router
 ): NewsListRouter {
 
-    override fun openNews(newsId: String) {
-        router.navigateTo(Screen.NEWS_DETAIL, newsId)
+    override fun openNews(id: String) {
+        router.navigateTo(Screen.NEWS_CONTENT, id)
     }
 
 }

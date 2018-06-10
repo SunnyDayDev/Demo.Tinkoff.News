@@ -7,6 +7,6 @@ package me.sunnydaydev.tnews.newslist
 
 interface NewsListRouter {
 
-    fun openNews(newsId: String)
+    fun openNews(id: String)
 
 }
