@@ -3,6 +3,7 @@ package me.sunnydaydev.tnews.domain.news.di
 import dagger.Binds
 import dagger.Component
 import dagger.Module
+import me.sunnydaydev.tnews.coregeneral.di.CoreProvider
 import me.sunnydaydev.tnews.domain.news.NewsRepository
 import me.sunnydaydev.tnews.domain.news.NewsRepositoryImpl
 import me.sunnydaydev.tnews.domain.network.di.NetworkServicesProvider
@@ -16,15 +17,16 @@ import javax.inject.Singleton
 @Singleton
 @Component(
         modules = [NewsModule::class],
-        dependencies = [NetworkServicesProvider::class]
+        dependencies = [CoreProvider::class, NetworkServicesProvider::class]
 )
 interface NewsDomainComponent: NewsDomainProvider {
 
     object Initializer {
 
-        fun init(network: NetworkServicesProvider): NewsDomainComponent {
+        fun init(core: CoreProvider, network: NetworkServicesProvider): NewsDomainComponent {
 
            return DaggerNewsDomainComponent.builder()
+                   .coreProvider(core)
                    .networkServicesProvider(network)
                    .build()
 
@@ -40,7 +42,7 @@ interface NewsDomainProvider {
 
 }
 
-@Module
+@Module(includes = [DatabaseModule::class])
 internal interface NewsModule {
 
     @Binds

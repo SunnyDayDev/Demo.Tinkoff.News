@@ -37,7 +37,7 @@ interface AppComponent: Injector<App>,
 
             val network = NetworkComponent.Initializer.init()
 
-            val newsDomain = NewsDomainComponent.Initializer.init(network)
+            val newsDomain = NewsDomainComponent.Initializer.init(core, network)
 
             val flow = FlowComponent.Initializer.init(core)
 

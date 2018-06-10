@@ -19,6 +19,7 @@ defaultAndroidModule()
 dependencies {
 
     implementation project(':domain_network')
+    implementation project(':core')
 
     deps.shortcut.kotlin()
     deps.shortcut.rx()

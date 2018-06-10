@@ -6,10 +6,12 @@
     <color name="palette_red">#cf0000</color>
     <color name="palette_amber_700">#ffa000</color>
     <color name="palette_amber_500">#ffc107</color>
+    <color name="palette_amber_500_alpha_50">#7cffc107</color>
 
     <color name="colorPrimary">@color/palette_amber_700</color>
     <color name="colorPrimaryDark">@color/palette_amber_700</color>
     <color name="colorAccent">@color/palette_amber_500</color>
+    <color name="colorAccentAlpha50">@color/palette_amber_500_alpha_50</color>
 
     <color name="text_major">#f30a0a0a</color>
     <color name="text_minor">#f5464646</color>

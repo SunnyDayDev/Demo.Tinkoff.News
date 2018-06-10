@@ -32,6 +32,8 @@ dependencies {
     deps.shortcut.dagger(true)
 
     implementation deps.androidx.card
+    implementation deps.androidx.swipeRefreshLayout
+
     implementation deps.network.glide
 
     kapt deps.dataBinding.compiler
