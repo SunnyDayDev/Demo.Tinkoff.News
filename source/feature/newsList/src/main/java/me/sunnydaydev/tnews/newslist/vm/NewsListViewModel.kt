@@ -47,9 +47,9 @@ internal class NewsListViewModel @Inject constructor(
 
     val scrollToPosition = Command<Int>()
 
-    private val startedScopeDisposable = DisposableBag(enabled = false)
+    private val updateNewsDisposable = OptionalDisposable(autoDispose = true)
 
-    private var newsUpdating = false
+    private var newsUpdated = false
 
     init {
 
@@ -62,15 +62,10 @@ internal class NewsListViewModel @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onViewStart() {
 
-        startedScopeDisposable.enabled = true
+        if (!newsUpdated) {
+            updateNews()
+        }
 
-        updateNews()
-
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onViewStop() {
-        startedScopeDisposable.enabled = false
     }
 
     fun onRefresh() {
@@ -84,15 +79,13 @@ internal class NewsListViewModel @Inject constructor(
 
     private fun updateNews() {
 
-        if (newsUpdating) return
-        newsUpdating = true
-
         state = ViewModelState.LOADING
 
         interactor.updateNews()
-                .doFinally { newsUpdating = false }
+                .doOnComplete { newsUpdated = true }
                 .defaultSchedulers()
                 .subscribeIt(onError = SimpleErrorHandler(false, ::onNewsUpdateError))
+                .disposeBy(updateNewsDisposable)
 
     }
 
