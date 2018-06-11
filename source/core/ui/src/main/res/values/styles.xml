@@ -9,9 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="colorControlHighlight">@color/colorAccent</item>
-
-        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
-
+        
     </style>
 
     <!-- Base application theme. -->
