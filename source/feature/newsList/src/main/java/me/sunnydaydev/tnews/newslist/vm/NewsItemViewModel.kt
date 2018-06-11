@@ -8,7 +8,9 @@ import me.sunnydaydev.tnews.coreui.viewModel.BaseVewModel
 import me.sunnydaydev.tnews.domain.news.News
 import me.sunnydaydev.mvvmkit.observable.bindable
 import me.sunnydaydev.tnews.coreui.util.StableIdProvider
+import me.sunnydaydev.tnews.newslist.NewsContentTransitionData
 import me.sunnydaydev.tnews.newslist.NewsListRouter
+import me.sunnydaydev.tnews.newslist.R
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -31,11 +33,19 @@ internal class NewsItemViewModel(
     @get:Bindable val date by bindable(formatDate(news.publicationDate))
     @get:Bindable val icon by bindable(iconUrl(news.id))
 
+    @get:Bindable val titleTransitionName by bindable("titleTransition${news.id}")
+
+    @get:Bindable val titleTags by bindable(createTitleTags())
+
     val highlightCommand = PureCommand()
 
     fun onItemClicked() {
-        router.openNews(news.id)
+        router.openNews(NewsContentTransitionData(news.id, title))
     }
+
+    private fun createTitleTags(): Map<Int, Any> = mapOf(
+            R.id.transition_newslist_title to news.id
+    )
 
     class Factory @Inject constructor(
             private val stableIdProvider: StableIdProvider,

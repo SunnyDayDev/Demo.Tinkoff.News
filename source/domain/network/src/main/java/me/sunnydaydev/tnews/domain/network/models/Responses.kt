@@ -1,6 +1,7 @@
 package me.sunnydaydev.tnews.domain.network.models
 
 import io.reactivex.Single
+import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,14 +27,14 @@ internal interface Response<T> {
 
 @Serializable
 internal data class NewsContentResponse(
-        override val payload: NewsContentDto?,
+        @Optional override val payload: NewsContentDto? = null,
         override val resultCode: String,
         override val trackingId: Long
 ): Response<NewsContentDto>
 
 @Serializable
 internal data class NewsResponse(
-        override val payload: List<NewsDto>?,
+        @Optional override val payload: List<NewsDto>? = null,
         override val resultCode: String,
         override val trackingId: Long
 ): Response<List<NewsDto>>

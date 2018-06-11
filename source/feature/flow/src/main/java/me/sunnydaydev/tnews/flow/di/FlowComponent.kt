@@ -1,13 +1,13 @@
 package me.sunnydaydev.tnews.flow.di
 
+import dagger.*
 import me.sunnydaydev.tnews.flow.routing.NewsListRouterImpl
-import dagger.Binds
-import dagger.Component
-import dagger.Module
-import dagger.Provides
 import me.sunnydaydev.tnews.coregeneral.di.CoreProvider
 import me.sunnydaydev.tnews.flow.FlowInitializer
 import me.sunnydaydev.tnews.flow.FlowInitializerImpl
+import me.sunnydaydev.tnews.flow.routing.NewsContentRouterImpl
+import me.sunnydaydev.tnews.newscontent.NewsContentRouter
+import me.sunnydaydev.tnews.newscontent.di.NewsContentRouterProvider
 import me.sunnydaydev.tnews.newslist.NewsListRouter
 import me.sunnydaydev.tnews.newslist.di.NewsListRouterProvider
 import ru.terrakok.cicerone.Cicerone
@@ -42,9 +42,10 @@ interface FlowComponent: FlowProvider {
 }
 
 interface FlowProvider:
-        NewsListRouterProvider {
+        NewsListRouterProvider,
+        NewsContentRouterProvider {
 
-    val flowInitialier: FlowInitializer
+    val flowInitializer: FlowInitializer
 
 }
 
@@ -69,7 +70,12 @@ internal class FlowProvidesModule {
 internal interface FlowBindsModule {
 
     @Binds
+    @Reusable
     fun bindNewsListRouter(impl: NewsListRouterImpl): NewsListRouter
+
+    @Binds
+    @Reusable
+    fun bindNewsContentRouter(impl: NewsContentRouterImpl): NewsContentRouter
 
     @Binds
     @Singleton
