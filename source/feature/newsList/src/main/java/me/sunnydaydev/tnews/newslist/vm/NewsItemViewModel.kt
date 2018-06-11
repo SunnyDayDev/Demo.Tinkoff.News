@@ -8,6 +8,7 @@ import me.sunnydaydev.tnews.coreui.viewModel.BaseVewModel
 import me.sunnydaydev.tnews.domain.news.News
 import me.sunnydaydev.mvvmkit.observable.bindable
 import me.sunnydaydev.tnews.coreui.util.StableIdProvider
+import me.sunnydaydev.tnews.newslist.NewsContentTransitionData
 import me.sunnydaydev.tnews.newslist.NewsListRouter
 import me.sunnydaydev.tnews.newslist.R
 import java.text.SimpleDateFormat
@@ -39,7 +40,7 @@ internal class NewsItemViewModel(
     val highlightCommand = PureCommand()
 
     fun onItemClicked() {
-        router.openNews(news.id)
+        router.openNews(NewsContentTransitionData(news.id, title))
     }
 
     private fun createTitleTags(): Map<Int, Any> = mapOf(

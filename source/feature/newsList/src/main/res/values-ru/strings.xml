@@ -3,7 +3,5 @@
 
     <string name="prompt_icon_description">Иконка новостией</string>
     <string name="prompt_loading">Загружаем новости…</string>
-    <string name="prompt_error_happen">Упс! Что-то пошло не так…</string>
-    <string name="prompt_retry">Повторить</string>
 
 </resources>

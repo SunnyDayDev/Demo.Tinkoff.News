@@ -21,7 +21,9 @@ import me.sunnydaydev.mvvmkit.util.contentView
 import me.sunnydaydev.mvvmkit.util.find
 import me.sunnydaydev.mvvmkit.util.findViewWithTag
 import me.sunnydaydev.tnews.coreui.util.Transitions
+import me.sunnydaydev.tnews.flow.util.actionBarView
 import me.sunnydaydev.tnews.newscontent.NewsContentActivity
+import me.sunnydaydev.tnews.newslist.NewsContentTransitionData
 import me.sunnydaydev.tnews.newslist.NewsListActivity
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -52,14 +54,16 @@ internal class FlowNavigator(
         Screen.NEWS_LIST -> NewsListActivity.intent(context)
         Screen.NEWS_CONTENT -> {
 
-            val id = data as String
+            data as NewsContentTransitionData
 
-            val titleTransitionName = activity.findViewWithTag(R.id.transition_newslist_title, id)
+            val titleTransitionName = activity
+                    .findViewWithTag(R.id.transition_newslist_title, data.id)
                     ?.let { ViewCompat.getTransitionName(it) }
                     ?: ""
 
             NewsContentActivity.intent(
-                    id,
+                    data.id,
+                    data.title,
                     titleTransitionName,
                     context
             )
@@ -76,14 +80,12 @@ internal class FlowNavigator(
 
                 // TODO: Transition name nullability
 
-                val id = command.transitionData as String
+                val data = command.transitionData as NewsContentTransitionData
 
-                val title = activity.findViewWithTag(R.id.transition_newslist_title, id)!!
+                val title = activity.findViewWithTag(R.id.transition_newslist_title, data.id)!!
                 val statusBar: View = activity.findViewById(android.R.id.statusBarBackground)
                 val navigationBar: View = activity.findViewById(android.R.id.navigationBarBackground)
-                val toolbar: View = (activity.findViewById<View>(android.R.id.content).parent as ViewGroup)
-                        .find { it is ActionBarContainer } !!
-                toolbar.transitionName = Transitions.TOOLBAR_TRANSITION_NAME
+                val toolbar = activity.actionBarView !!
 
                 ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                         UtilPair.create(title, ViewCompat.getTransitionName(title)),

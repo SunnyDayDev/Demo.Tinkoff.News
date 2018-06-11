@@ -2,7 +2,6 @@ package me.sunnydaydev.tnews.newscontent
 
 import android.os.Build
 import android.text.Html
-import android.text.Spannable
 import android.text.Spanned
 import android.text.SpannedString
 import androidx.databinding.Bindable
@@ -12,9 +11,11 @@ import me.sunnydaydev.modernrx.*
 import me.sunnydaydev.mvvmkit.OnBackPressedListener
 import me.sunnydaydev.mvvmkit.observable.bindable
 import me.sunnydaydev.mvvmkit.util.ViewLifeCycle
+import me.sunnydaydev.tnews.coregeneral.AppResources
 import me.sunnydaydev.tnews.coregeneral.rx.defaultSchedulers
 import me.sunnydaydev.tnews.coreui.viewModel.LifecycleVewModel
 import me.sunnydaydev.tnews.coreui.viewModel.ViewModelState
+import me.sunnydaydev.tnews.domain.news.NewsContent
 import javax.inject.Inject
 
 /**
@@ -33,26 +34,25 @@ internal class NewsContentViewModel @Inject constructor(
 ): LifecycleVewModel(viewLifeCycle), OnBackPressedListener {
 
     @get:Bindable var state by bindable(ViewModelState.LOADING)
-    @get:Bindable var title by bindable("")
+    @get:Bindable var title by bindable(args.title)
     @get:Bindable var content: Spanned by bindable(SpannedString(""))
 
     @get:Bindable val titleTransitionName by bindable(args.titleTransitionName)
 
-    private val startedScopeDisposable = DisposableBag(enabled = false)
+    private val contentDisposable = OptionalDisposable(true)
+
+    private var hasContent = false
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onViewStart() {
-
-        startedScopeDisposable.enabled = true
+        if (hasContent) return
 
         loadNewsContent()
 
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onViewStop() {
-        startedScopeDisposable.enabled = false
-    }
+    fun onViewStop() = contentDisposable.dispose()
 
     fun onRetry() {
         loadNewsContent()
@@ -61,17 +61,36 @@ internal class NewsContentViewModel @Inject constructor(
     override fun onBackPressed(): Boolean = router.exit().let { true }
 
     private fun loadNewsContent() {
+
+        state = ViewModelState.LOADING
+
         interactor.getNewsContent(args.id)
                 .defaultSchedulers()
-                .subscribeIt {
-                    title = it.title.text
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        content = Html.fromHtml(it.content, 0)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        content = Html.fromHtml(it.content)
-                    }
-                }
+                .subscribeIt(
+                        onSuccess = ::handleNewsContent,
+                        onError = SimpleErrorHandler(false, ::handleNewsContentError)
+                )
+                .disposeBy(contentDisposable)
+
+    }
+
+    private fun handleNewsContent(news: NewsContent) {
+
+        hasContent = true
+        title = news.title.text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            content = Html.fromHtml(news.content, 0)
+        } else {
+            @Suppress("DEPRECATION")
+            content = Html.fromHtml(news.content)
+        }
+
+        state = ViewModelState.CONTENT
+
+    }
+
+    private fun handleNewsContentError() {
+        state = ViewModelState.ERROR
     }
 
 }

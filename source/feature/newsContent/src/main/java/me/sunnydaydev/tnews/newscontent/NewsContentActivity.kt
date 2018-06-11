@@ -16,14 +16,13 @@ class NewsContentActivity : BaseMVVMActivity() {
 
         fun intent(
                 id: String,
+                title: String,
                 titleTransitionName: String,
                 ctx: Context
         ) = createIntent<NewsContentActivity>(ctx).apply {
 
-            Bundle().apply {
-                this.id = id
-                this.titleTransitionName = titleTransitionName
-            }.let(::putExtras)
+            val params = NewsContentParamsFactory.create(id, title, titleTransitionName)
+            putExtras(params)
 
         }
 

@@ -2,7 +2,5 @@
 <resources>
 
     <string name="prompt_newscontent_loading">News content loading…</string>
-    <string name="prompt_error_happen">Ops! Error happen…</string>
-    <string name="prompt_retry">Retry</string>
 
 </resources>
