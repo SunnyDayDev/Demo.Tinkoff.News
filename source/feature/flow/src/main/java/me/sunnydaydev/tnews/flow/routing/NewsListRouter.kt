@@ -1,5 +1,6 @@
 package me.sunnydaydev.tnews.flow.routing
 
+import me.sunnydaydev.tnews.newslist.NewsContentTransitionData
 import me.sunnydaydev.tnews.newslist.NewsListRouter
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -13,8 +14,12 @@ internal class NewsListRouterImpl @Inject constructor(
         private val router: Router
 ): NewsListRouter {
 
-    override fun openNews(newsId: String) {
-        router.navigateTo(Screen.NEWS_DETAIL, newsId)
+    override fun openNews(data: NewsContentTransitionData) {
+        router.navigateTo(Screen.NEWS_CONTENT, data)
+    }
+
+    override fun exit() {
+        router.exit()
     }
 
 }

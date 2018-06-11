@@ -2,10 +2,7 @@ package me.sunnydaydev.tnews.coregeneral.di
 
 import android.content.Context
 import dagger.*
-import me.sunnydaydev.tnews.coregeneral.CoreInitializer
-import me.sunnydaydev.tnews.coregeneral.CoreInitializerIml
-import me.sunnydaydev.tnews.coregeneral.Prefs
-import me.sunnydaydev.tnews.coregeneral.PrefsImpl
+import me.sunnydaydev.tnews.coregeneral.*
 import javax.inject.Singleton
 
 @Singleton
@@ -40,7 +37,9 @@ interface CoreProvider {
 
     val applicationContext: Context
 
-    val prefs: Prefs
+    val toaster: Toaster
+
+    val appResources: AppResources
 
 }
 
@@ -57,6 +56,9 @@ internal interface CoreProvidesModule {
     fun bindAppInitializer(impl: CoreInitializerIml): CoreInitializer
 
     @Binds
-    fun bindPrefs(impl: PrefsImpl): Prefs
+    fun bindToaster(impl: ToasterImpl): Toaster
+
+    @Binds
+    fun bindAppResources(impl: AppResourcesImpl): AppResources
 
 }

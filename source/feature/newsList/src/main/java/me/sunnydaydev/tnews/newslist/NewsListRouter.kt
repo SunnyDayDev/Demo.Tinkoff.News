@@ -7,6 +7,10 @@ package me.sunnydaydev.tnews.newslist
 
 interface NewsListRouter {
 
-    fun openNews(newsId: String)
+    fun openNews(data: NewsContentTransitionData)
+
+    fun exit()
 
 }
+
+data class NewsContentTransitionData(val id: String, val title: String)

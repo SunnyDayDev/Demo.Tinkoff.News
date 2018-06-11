@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="prompt_flag_description">News icon.</string>
-    <string name="prompt_currencies_loading">News loading…</string>
-    <string name="prompt_error_happen">Ops! Error happen…</string>
-    <string name="prompt_retry">Retry</string>
-
+    <string name="prompt_icon_description">News icon.</string>
+    <string name="prompt_loading">News loading…</string>
 </resources>

@@ -8,20 +8,23 @@ import kotlinx.serialization.Serializable
  */
 
 @Serializable
+data class DateDto(val milliseconds: Long)
+
+@Serializable
 data class NewsDto(
         val id: String,
         val name: String,
         val text: String,
-        val publicationDate: PublicationDate,
+        val publicationDate: DateDto,
         val bankInfoTypeId: Int
-) {
-
-    @Serializable
-    data class PublicationDate(val milliseconds: Long)
-
-}
+)
 
 @Serializable
 data class NewsContentDto(
-        val todo: Any // TODO: fill
+    val title: NewsDto,
+    val creationDate: DateDto,
+    val lastModificationDate: DateDto,
+    val content: String,
+    val bankInfoTypeId: Int,
+    val typeId: String
 )

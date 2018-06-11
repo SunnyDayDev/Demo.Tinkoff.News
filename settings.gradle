@@ -44,4 +44,7 @@ project(':feature_flow').projectDir = new File('source/feature/flow')
 include ':feature_newsList'
 project(':feature_newsList').projectDir = new File('source/feature/newsList')
 
+include ':feature_newsContent'
+project(':feature_newsContent').projectDir = new File('source/feature/newsContent')
+
 // endregion

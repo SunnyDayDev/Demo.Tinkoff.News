@@ -16,7 +16,7 @@ ext.versions += [
         kotlin: '1.2.41',
         serialization: '0.5.0',
         reflectLite: '1.0.0',
-        ktx: '1.0.0-alpha1'
+        ktx: '1.0.0-alpha3'
     ],
     androidx: [
         compat: '1.0.0-alpha3',
@@ -25,7 +25,7 @@ ext.versions += [
         multidex: '2.0.0',
         arch: [
             lifeCycle: '2.0.0-alpha1',
-            persistence: '2.0.0-alpha1'
+            room: '2.0.0-alpha1'
         ]
     ],
     googleServices: [
@@ -46,19 +46,20 @@ ext.versions += [
         retrofit: '2.4.0',
         okhttp: '3.10.0',
         glide: '4.7.1',
-        kotlinxNewsList: '0.0.1'
+        kotlinxConverter: '0.0.1'
     ],
     rx: [
         java: '2.1.12',
         android: '2.0.2',
         kotlin: '2.2.0',
-        modern: '1.2.0'
+        modern: '1.2.1'
     ],
     utils: [
         inputMask: '3.4.0',
         trayPrefs: '0.12.0',
         cicerone: 'b1ecd6d202',
-        mvvmkit: 'c03367b859'
+        mvvmkit: '797fcf0dc9',
+        reflow: '1.0.0-SNAPSHOT'
     ],
     view: [
         circularImageView: '3.0.2'
@@ -105,6 +106,7 @@ ext.deps = [
         appcompat: "androidx.appcompat:appcompat:$versions.androidx.compat",
         design: "com.google.android.material:material:$versions.androidx.compat",
         recyclerView: "androidx.recyclerview:recyclerview:$versions.androidx.compat",
+        swipeRefreshLayout: "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidx.compat",
         card: "androidx.cardview:cardview:$versions.androidx.compat",
         constraintLayout: "androidx.constraintlayout:constraintlayout:$versions.androidx.constraint",
         flexLayout: "com.google.android:flexbox:$versions.androidx.flex",
@@ -114,7 +116,10 @@ ext.deps = [
             runtime: "androidx.lifecycle:lifecycle-runtime:$versions.androidx.arch.lifeCycle",
             viewModel: "androidx.lifecycle:lifecycle-viewmodel:$versions.androidx.arch.lifeCycle",
             compiler: "androidx.lifecycle:lifecycle-compiler:$versions.androidx.arch.lifeCycle",
-            extensions: "androidx.lifecycle:lifecycle-extensions:$versions.androidx.arch.lifeCycle"
+            extensions: "androidx.lifecycle:lifecycle-extensions:$versions.androidx.arch.lifeCycle",
+            room: "androidx.room:room-runtime:$versions.androidx.arch.room",
+            roomCompiler: "androidx.room:room-compiler:$versions.androidx.arch.room",
+            roomRx: "androidx.room:room-rxjava2:$versions.androidx.arch.room"
         ]
     ],
     dataBinding: [
@@ -136,7 +141,7 @@ ext.deps = [
         logging: "com.squareup.okhttp3:logging-interceptor:$versions.network.okhttp",
         glide: "com.github.bumptech.glide:glide:$versions.network.glide",
         glideCompiler: "com.github.bumptech.glide:compiler:$versions.network.glide",
-        kotlinxNewsList: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.network.kotlinxNewsList"
+        kotlinxConverter: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.network.kotlinxConverter"
     ],
     debug: [
         fabricPlugin: "io.fabric.tools:gradle:$versions.debug.fabricPlugin",
@@ -147,7 +152,8 @@ ext.deps = [
         inputMask: "com.redmadrobot:inputmask:$versions.utils.inputMask",
         prefs: "net.grandcentrix.tray:tray:$versions.utils.trayPrefs",
         cicerone: "me.sunnydaydev:cicerone:$versions.utils.cicerone",
-        mvvmkit: "me.sunnydaydev:mvvmkit:$versions.utils.mvvmkit@aar"
+        mvvmkit: "me.sunnydaydev:mvvmkit:$versions.utils.mvvmkit@aar",
+        reflow: "com.shazam:android-reflow-animator:$versions.utils.reflow"
     ],
     view: [
         circularImageView: "com.mikhaellopez:circularimageview:$versions.view.circularImageView"
@@ -161,7 +167,8 @@ ext.deps += [
     shortcut: [
         rx: { dependenciesRx() },
         kotlin: { dependenciesKotlin() },
-        dagger: { kapt -> dependenciesDagger(kapt)}
+        dagger: { kapt -> dependenciesDagger(kapt)},
+        room: { dependenciesRoom() }
     ]
 ]
 
@@ -174,6 +181,7 @@ ext.handleRepositories = { handler, buildScript ->
     handler.maven { url 'https://maven.fabric.io/public' }
     handler.maven { url 'http://www.idescout.com/maven/repo/' }
     handler.maven { url "https://kotlin.bintray.com/kotlinx" }
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 
     if (!buildScript) {
         handler.maven { url 'https://jitpack.io' }
@@ -220,6 +228,32 @@ void dependenciesDagger(boolean useKapt) {
         if (useKapt) {
             kapt deps.core.daggerAndroidProcessor
         }
+
+    }
+
+}
+
+void dependenciesRoom() {
+
+    android {
+
+        defaultConfig {
+
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = ["room.schemaLocation": "$rootProject.projectDir/db.schemas".toString()]
+                }
+            }
+
+        }
+
+    }
+
+    dependencies {
+
+        implementation deps.androidx.arch.room
+        implementation deps.androidx.arch.roomRx
+        kapt deps.androidx.arch.roomCompiler
 
     }
 

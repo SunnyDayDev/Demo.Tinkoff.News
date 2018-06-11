@@ -3,4 +3,7 @@
 
     <item name="binding_newsitems_itemsmap" type="id"/>
 
+    <item name="transition_newslist_title" type="id"/>
+    <item name="transition_newslist_title_root" type="id"/>
+
 </resources>

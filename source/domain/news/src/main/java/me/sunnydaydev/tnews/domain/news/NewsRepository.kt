@@ -1,9 +1,13 @@
 package me.sunnydaydev.tnews.domain.news
 
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import me.sunnydaydev.tnews.domain.network.NewsNetworkService
 import me.sunnydaydev.tnews.domain.network.models.NewsDto
-import java.util.*
+import me.sunnydaydev.tnews.domain.news.db.NewsDao
+import me.sunnydaydev.tnews.domain.news.db.NewsEntity
+import me.sunnydaydev.tnews.domain.news.mapper.NewsMapperFactory
 import javax.inject.Inject
 
 /**
@@ -13,23 +17,35 @@ import javax.inject.Inject
 
 interface NewsRepository {
 
-    fun getNews(): Single<List<News>>
+    fun getNews(): Observable<List<News>>
+
+    fun getNewsContent(id: String): Single<NewsContent>
+
+    fun updateNews(): Completable
 
 }
 
 internal class NewsRepositoryImpl @Inject constructor(
-        private val newsNetworkService: NewsNetworkService
+        private val dao: NewsDao,
+        private val networkService: NewsNetworkService,
+        mappers: NewsMapperFactory
 ): NewsRepository {
 
-    override fun getNews(): Single<List<News>> = newsNetworkService.getNews()
-            .map { it.map(::map) }
+    private val entityMapper: (NewsEntity) -> News = mappers.newsEntityToPlain::map
+    private val dtoMapper: (NewsDto) -> NewsEntity = mappers.newsDtoToEntity::map
 
-    private fun map(dto: NewsDto) = News(
-            id = dto.id,
-            name = dto.name,
-            text = dto.text,
-            publicationDate = Date(dto.publicationDate.milliseconds),
-            bankInfoTypeId = dto.bankInfoTypeId
-    )
+    private val newsContentMapper = mappers.newsContentDtoToPlain
+
+    override fun getNews(): Observable<List<News>> = dao.allNews
+            .toObservable()
+            .map { it.map(entityMapper) }
+
+    override fun getNewsContent(id: String): Single<NewsContent> = networkService.getNewsContent(id)
+            .map(newsContentMapper::map)
+
+    override fun updateNews(): Completable = networkService.getNews()
+            .map { it.map(dtoMapper) }
+            .doOnSuccess(dao::insert)
+            .toCompletable()
 
 }
