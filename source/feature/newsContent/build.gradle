@@ -33,6 +33,7 @@ dependencies {
 
     implementation deps.androidx.card
     implementation deps.androidx.swipeRefreshLayout
+    implementation deps.androidx.design
 
     implementation deps.network.glide
 

@@ -15,7 +15,8 @@ import me.sunnydaydev.tnews.domain.news.di.NewsDomainProvider
 import me.sunnydaydev.tnews.coreui.di.VMFactory
 import me.sunnydaydev.tnews.coreui.di.MVVMModule
 import me.sunnydaydev.tnews.coreui.di.ViewModelKey
-import me.sunnydaydev.tnews.newscontent.NewsContentArguments
+import me.sunnydaydev.tnews.newscontent.NewsContentParams
+import me.sunnydaydev.tnews.newscontent.NewsContentRouter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +27,14 @@ import javax.inject.Singleton
 
 interface NewsContentComponentRequirements: ComponentRequirements,
         CoreProvider,
-        NewsDomainProvider
+        NewsDomainProvider,
+        NewsContentRouterProvider
+
+interface NewsContentRouterProvider {
+
+    val newsContentRouter: NewsContentRouter
+
+}
 
 @Singleton
 @Component(
@@ -39,7 +47,7 @@ internal interface NewsContentComponent: Injector<NewsContentFragment> {
 
         fun init(
                 requirements: NewsContentComponentRequirements,
-                args: NewsContentArguments
+                args: NewsContentParams
         ): NewsContentComponent {
 
             return DaggerNewsContentComponent.builder()
@@ -55,7 +63,7 @@ internal interface NewsContentComponent: Injector<NewsContentFragment> {
     interface Builder {
 
         @BindsInstance
-        fun bindArguments(args: NewsContentArguments): Builder
+        fun bindArguments(args: NewsContentParams): Builder
 
         fun requirements(requirements: NewsContentComponentRequirements): Builder
 

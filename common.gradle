@@ -16,7 +16,7 @@ ext.versions += [
         kotlin: '1.2.41',
         serialization: '0.5.0',
         reflectLite: '1.0.0',
-        ktx: '1.0.0-alpha1'
+        ktx: '1.0.0-alpha3'
     ],
     androidx: [
         compat: '1.0.0-alpha3',
@@ -58,7 +58,8 @@ ext.versions += [
         inputMask: '3.4.0',
         trayPrefs: '0.12.0',
         cicerone: 'b1ecd6d202',
-        mvvmkit: '7cb50eca93'
+        mvvmkit: '797fcf0dc9',
+        reflow: '1.0.0-SNAPSHOT'
     ],
     view: [
         circularImageView: '3.0.2'
@@ -151,7 +152,8 @@ ext.deps = [
         inputMask: "com.redmadrobot:inputmask:$versions.utils.inputMask",
         prefs: "net.grandcentrix.tray:tray:$versions.utils.trayPrefs",
         cicerone: "me.sunnydaydev:cicerone:$versions.utils.cicerone",
-        mvvmkit: "me.sunnydaydev:mvvmkit:$versions.utils.mvvmkit@aar"
+        mvvmkit: "me.sunnydaydev:mvvmkit:$versions.utils.mvvmkit@aar",
+        reflow: "com.shazam:android-reflow-animator:$versions.utils.reflow"
     ],
     view: [
         circularImageView: "com.mikhaellopez:circularimageview:$versions.view.circularImageView"
@@ -179,6 +181,7 @@ ext.handleRepositories = { handler, buildScript ->
     handler.maven { url 'https://maven.fabric.io/public' }
     handler.maven { url 'http://www.idescout.com/maven/repo/' }
     handler.maven { url "https://kotlin.bintray.com/kotlinx" }
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 
     if (!buildScript) {
         handler.maven { url 'https://jitpack.io' }

@@ -9,4 +9,6 @@ interface NewsListRouter {
 
     fun openNews(id: String)
 
+    fun exit()
+
 }

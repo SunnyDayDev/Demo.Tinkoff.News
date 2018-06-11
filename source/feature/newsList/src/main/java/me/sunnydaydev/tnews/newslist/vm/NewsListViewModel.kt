@@ -7,6 +7,7 @@ import me.sunnydaydev.tnews.coregeneral.rx.defaultSchedulers
 import me.sunnydaydev.tnews.coreui.viewModel.ViewModelState
 import me.sunnydaydev.tnews.domain.news.News
 import me.sunnydaydev.modernrx.*
+import me.sunnydaydev.mvvmkit.OnBackPressedListener
 import me.sunnydaydev.mvvmkit.observable.Command
 import me.sunnydaydev.mvvmkit.observable.MVVMList
 import me.sunnydaydev.mvvmkit.observable.SortedMVVMList
@@ -16,6 +17,7 @@ import me.sunnydaydev.tnews.coregeneral.AppResources
 import me.sunnydaydev.tnews.coregeneral.Toaster
 import me.sunnydaydev.tnews.coreui.viewModel.LifecycleVewModel
 import me.sunnydaydev.tnews.newslist.NewsListInteractor
+import me.sunnydaydev.tnews.newslist.NewsListRouter
 import me.sunnydaydev.tnews.newslist.R
 import javax.inject.Inject
 import kotlin.Comparator
@@ -33,8 +35,9 @@ internal class NewsListViewModel @Inject constructor(
         private val itemFactory: NewsItemViewModel.Factory,
         private val toaster: Toaster,
         private val res: AppResources,
+        private val router: NewsListRouter,
         viewLifeCycle: ViewLifeCycle
-): LifecycleVewModel(viewLifeCycle) {
+): LifecycleVewModel(viewLifeCycle), OnBackPressedListener {
 
     private val newsComparator = createNewsComparator()
     private val viewModelsComparator = createViewModelsComparator()
@@ -72,6 +75,11 @@ internal class NewsListViewModel @Inject constructor(
 
     fun onRefresh() {
         updateNews()
+    }
+
+    override fun onBackPressed(): Boolean {
+        router.exit()
+        return true
     }
 
     private fun updateNews() {

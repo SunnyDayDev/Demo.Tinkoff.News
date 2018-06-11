@@ -8,12 +8,7 @@ import me.sunnydaydev.tnews.coregeneral.util.bundleString
  * mail: mail@sunnydaydev.me
  */
 
-internal var Bundle.newsId: String by bundleString("news.content.id")
+internal typealias NewsContentParams = Bundle
 
-internal data class NewsContentArguments(
-        val id: String
-) {
-
-    constructor(args: Bundle): this(args.newsId)
-
-}
+internal var NewsContentParams.id: String by bundleString("news.content.id")
+internal var NewsContentParams.titleTransitionName: String by bundleString("news.content.titleTransitionName")

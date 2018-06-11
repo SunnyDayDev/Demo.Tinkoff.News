@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="NewsContent"/>
+
+    <style name="NewsContent.ExpandedToolbarTextStyle">
+        <item name="android:textColor">@color/palette_white</item>
+        <item name="android:textSize">0.1sp</item>
+    </style>
+
+</resources>
