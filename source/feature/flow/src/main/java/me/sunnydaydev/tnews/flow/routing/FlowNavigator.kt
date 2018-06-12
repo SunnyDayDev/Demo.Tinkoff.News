@@ -7,20 +7,15 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import androidx.appcompat.widget.ActionBarContainer
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.medicine.ima.app.flow.R
-import me.sunnydaydev.mvvmkit.util.contentView
-import me.sunnydaydev.mvvmkit.util.find
 import me.sunnydaydev.mvvmkit.util.findViewWithTag
 import me.sunnydaydev.tnews.coreui.util.Transitions
+import me.sunnydaydev.tnews.flow.R
 import me.sunnydaydev.tnews.flow.util.actionBarView
 import me.sunnydaydev.tnews.newscontent.NewsContentActivity
 import me.sunnydaydev.tnews.newslist.NewsContentTransitionData
@@ -28,7 +23,6 @@ import me.sunnydaydev.tnews.newslist.NewsListActivity
 import ru.terrakok.cicerone.android.SupportAppNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
-import java.nio.file.Files.find
 import javax.inject.Inject
 
 
