@@ -6,10 +6,13 @@ import me.sunnydaydev.tnews.coregeneral.di.CoreProvider
 import me.sunnydaydev.tnews.flow.FlowInitializer
 import me.sunnydaydev.tnews.flow.FlowInitializerImpl
 import me.sunnydaydev.tnews.flow.routing.NewsContentRouterImpl
+import me.sunnydaydev.tnews.flow.routing.SplashRouterImpl
 import me.sunnydaydev.tnews.newscontent.NewsContentRouter
 import me.sunnydaydev.tnews.newscontent.di.NewsContentRouterProvider
 import me.sunnydaydev.tnews.newslist.NewsListRouter
 import me.sunnydaydev.tnews.newslist.di.NewsListRouterProvider
+import me.sunnydaydev.tnews.splash.SplashRouter
+import me.sunnydaydev.tnews.splash.di.SplashRouterProvider
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
@@ -43,7 +46,8 @@ interface FlowComponent: FlowProvider {
 
 interface FlowProvider:
         NewsListRouterProvider,
-        NewsContentRouterProvider {
+        NewsContentRouterProvider,
+        SplashRouterProvider {
 
     val flowInitializer: FlowInitializer
 
@@ -76,6 +80,10 @@ internal interface FlowBindsModule {
     @Binds
     @Reusable
     fun bindNewsContentRouter(impl: NewsContentRouterImpl): NewsContentRouter
+
+    @Binds
+    @Reusable
+    fun bindSplashRouter(impl: SplashRouterImpl): SplashRouter
 
     @Binds
     @Singleton

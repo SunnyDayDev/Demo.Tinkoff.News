@@ -13,6 +13,7 @@ import me.sunnydaydev.tnews.domain.network.di.NetworkComponent
 import me.sunnydaydev.tnews.flow.di.FlowComponent
 import me.sunnydaydev.tnews.flow.di.FlowProvider
 import me.sunnydaydev.tnews.newscontent.di.NewsContentComponentRequirements
+import me.sunnydaydev.tnews.splash.di.SplashComponentRequirements
 
 /**
  * Created by sunny on 09.06.2018.
@@ -29,7 +30,8 @@ import me.sunnydaydev.tnews.newscontent.di.NewsContentComponentRequirements
 )
 interface AppComponent: Injector<App>,
         NewsListComponentRequirements,
-        NewsContentComponentRequirements{
+        NewsContentComponentRequirements,
+        SplashComponentRequirements {
 
     object Initializer {
 

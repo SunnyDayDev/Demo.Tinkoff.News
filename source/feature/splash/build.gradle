@@ -1,0 +1,43 @@
+// Not working with AS 3.2.0-a17
+// apply plugin: 'com.android.feature'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+defaultAndroidModule()
+
+android {
+
+    //baseFeature false
+    dataBinding.enabled = true
+
+}
+
+dependencies {
+
+    //application project(':app_normal')
+
+    implementation project(':core')
+    implementation project(':core_ui')
+
+    implementation project(':domain_news')
+
+    implementation project(':feature_base')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    deps.shortcut.kotlin()
+    deps.shortcut.rx()
+    deps.shortcut.dagger(true)
+
+    implementation deps.androidx.card
+    implementation deps.androidx.swipeRefreshLayout
+    implementation deps.androidx.design
+
+    implementation deps.network.glide
+
+    kapt deps.dataBinding.compiler
+    kapt deps.androidx.arch.compiler
+    
+}
