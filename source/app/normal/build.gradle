@@ -28,7 +28,8 @@ dependencies {
 
     implementation project(':feature_base')
     implementation project(':feature_flow')
-    
+
+    implementation project(':feature_splash')
     implementation project(':feature_newsList')
     implementation project(':feature_newsContent')
 
