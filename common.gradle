@@ -58,7 +58,7 @@ ext.versions += [
         inputMask: '3.4.0',
         trayPrefs: '0.12.0',
         cicerone: 'b1ecd6d202',
-        mvvmkit: '797fcf0dc9',
+        mvvmkit: '588a47f75d',
         reflow: '1.0.0-SNAPSHOT'
     ],
     view: [

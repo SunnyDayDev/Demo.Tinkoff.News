@@ -6,6 +6,7 @@
 
     <data>
 
+        <import type="android.text.method.LinkMovementMethod"/>
         <import type="me.sunnydaydev.tnews.coreui.util.Transitions"/>
 
         <import type="me.sunnydaydev.tnews.coreui.viewModel.ViewModelState"/>
@@ -68,6 +69,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:fillViewport="true">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -76,7 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{vm.content}"
-                    android:padding="16dp"/>
+                    android:padding="16dp"
+                    movementMethod="@{LinkMovementMethod.getInstance()}"/>
 
                 <androidx.constraintlayout.ConstraintLayout
                     android:id="@+id/progressContainer"

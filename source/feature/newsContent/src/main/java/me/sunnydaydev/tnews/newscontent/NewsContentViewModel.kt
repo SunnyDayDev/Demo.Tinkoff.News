@@ -4,6 +4,7 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.text.SpannedString
+import androidx.core.text.HtmlCompat
 import androidx.databinding.Bindable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
@@ -78,13 +79,7 @@ internal class NewsContentViewModel @Inject constructor(
 
         hasContent = true
         title = news.title.text
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            content = Html.fromHtml(news.content, 0)
-        } else {
-            @Suppress("DEPRECATION")
-            content = Html.fromHtml(news.content)
-        }
-
+        content = HtmlCompat.fromHtml(news.content, HtmlCompat.FROM_HTML_MODE_LEGACY)
         state = ViewModelState.CONTENT
 
     }
