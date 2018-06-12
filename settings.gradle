@@ -41,6 +41,9 @@ project(':feature_base').projectDir = new File('source/feature/base')
 include ':feature_flow'
 project(':feature_flow').projectDir = new File('source/feature/flow')
 
+include ':feature_splash'
+project(':feature_splash').projectDir = new File('source/feature/splash')
+
 include ':feature_newsList'
 project(':feature_newsList').projectDir = new File('source/feature/newsList')
 
