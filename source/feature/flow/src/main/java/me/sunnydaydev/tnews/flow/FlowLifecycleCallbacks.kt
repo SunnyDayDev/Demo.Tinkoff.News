@@ -3,12 +3,8 @@ package me.sunnydaydev.tnews.flow
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.widget.ActionBarContainer
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.FragmentActivity
-import me.sunnydaydev.mvvmkit.util.find
 import me.sunnydaydev.tnews.coreui.util.HasFragmentContainer
 import me.sunnydaydev.tnews.coreui.util.SimpleActivityLifecycleCallbacks
 import me.sunnydaydev.tnews.coreui.util.Transitions
