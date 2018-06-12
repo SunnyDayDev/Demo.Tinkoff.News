@@ -16,6 +16,7 @@ import me.sunnydaydev.tnews.coreui.MVVMFragment
 import me.sunnydaydev.tnews.coreui.viewModel.BaseVewModel
 import me.sunnydaydev.mvvmkit.util.inflateBinding
 import me.sunnydaydev.mvvmkit.viewModel.get
+import me.sunnydaydev.tnews.coreui.util.ThemedAttributeProvider
 import me.sunnydaydev.tnews.newscontent.databinding.NewscontentFragmentBinding
 import javax.inject.Inject
 
@@ -40,8 +41,9 @@ class NewsContentFragment: MVVMFragment<NewscontentFragmentBinding>() {
 
         val args = NewsContentParams(arguments!!)
 
+        val themedAttributeProvider = ThemedAttributeProvider(activity!!.theme, context!!)
         NewsContentComponent.Initializer
-                .init(provider.getComponentRequirements(), args)
+                .init(provider.getComponentRequirements(), args, themedAttributeProvider)
                 .inject(this)
 
     }

@@ -25,15 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.Toolbar"
-            app:transitionName="@{Transitions.TOOLBAR_TRANSITION_NAME}">
+            app:transitionName="@{Transitions.TOOLBAR_TRANSITION_NAME}"
+            onOffsetChanged="@{vm.toolbar::onToolbarOffsetChanged}">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleTextAppearance="@style/NewsContent.ExpandedToolbarTextStyle"
                 app:contentScrim="?attr/colorPrimary">
 
+                <!-- Expanded Title-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,23 +43,46 @@
                     android:text="@{vm.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:layout_marginTop="?attr/actionBarSize"
+                    android:translationX="@{vm.toolbar.expandedTitleXOffset}"
+                    android:alpha="@{vm.toolbar.expandedTitleAlpha}"
+                    android:paddingTop="14dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="16dp"
                     app:transitionName="@{vm.titleTransitionName}"
-                    app:layout_collapseMode="parallax"
+                    app:layout_collapseMode="none"
                     tools:text="Some titleTransitionName"/>
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:title="@{vm.title}"
+                    android:title='@{" "}'
                     app:layout_collapseMode="pin"
                     tools:layout_height="56dp"
                     tools:titleTransitionName="Some titleTransitionName"
-                    android:fitsSystemWindows="false"
-                    android:background="@color/colorPrimary"/>
+                    android:fitsSystemWindows="false"/>
+
+                <!-- Collapsed Title-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/palette_white"
+                    android:text="@{vm.title}"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/newscontent_max_title_start_margin"
+                    android:alpha="@{vm.toolbar.collapsedTitleAlpha}"
+                    android:translationX="@{vm.toolbar.collapsedTitleXOffset}"
+                    android:translationY="@{vm.toolbar.collapsedTitleYOffset}"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_collapseMode="pin"
+                    tools:text="Some titleTransitionName"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

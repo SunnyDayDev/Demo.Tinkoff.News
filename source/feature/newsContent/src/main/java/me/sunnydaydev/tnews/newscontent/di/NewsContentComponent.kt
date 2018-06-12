@@ -15,6 +15,7 @@ import me.sunnydaydev.tnews.domain.news.di.NewsDomainProvider
 import me.sunnydaydev.tnews.coreui.di.VMFactory
 import me.sunnydaydev.tnews.coreui.di.MVVMModule
 import me.sunnydaydev.tnews.coreui.di.ViewModelKey
+import me.sunnydaydev.tnews.coreui.util.ThemedAttributeProvider
 import me.sunnydaydev.tnews.newscontent.NewsContentParams
 import me.sunnydaydev.tnews.newscontent.NewsContentRouter
 import javax.inject.Inject
@@ -47,12 +48,14 @@ internal interface NewsContentComponent: Injector<NewsContentFragment> {
 
         fun init(
                 requirements: NewsContentComponentRequirements,
-                args: NewsContentParams
+                args: NewsContentParams,
+                themedAttributeProvider: ThemedAttributeProvider
         ): NewsContentComponent {
 
             return DaggerNewsContentComponent.builder()
                     .requirements(requirements)
-                    .bindArguments(args)
+                    .arguments(args)
+                    .themedAttributeProvider(themedAttributeProvider)
                     .build()
 
         }
@@ -63,9 +66,12 @@ internal interface NewsContentComponent: Injector<NewsContentFragment> {
     interface Builder {
 
         @BindsInstance
-        fun bindArguments(args: NewsContentParams): Builder
+        fun arguments(args: NewsContentParams): Builder
 
         fun requirements(requirements: NewsContentComponentRequirements): Builder
+
+        @BindsInstance
+        fun themedAttributeProvider(attributeProvider: ThemedAttributeProvider): Builder
 
         fun build(): NewsContentComponent
 

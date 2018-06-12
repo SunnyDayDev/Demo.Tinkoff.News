@@ -58,7 +58,7 @@ ext.versions += [
         inputMask: '3.4.0',
         trayPrefs: '0.12.0',
         cicerone: 'b1ecd6d202',
-        mvvmkit: '588a47f75d',
+        mvvmkit: '49d466bcfd',
         reflow: '1.0.0-SNAPSHOT'
     ],
     view: [
@@ -85,7 +85,7 @@ ext.deps = [
         daggerAndroid: "com.google.dagger:dagger-android:$versions.core.dagger",
         daggerAndroidSupport: "com.google.dagger:dagger-android-support:$versions.core.dagger",
         daggerAndroidProcessor: "com.google.dagger:dagger-android-processor:$versions.core.dagger",
-        daggerCompiler: "com.google.dagger:dagger-compiler:$versions.core.dagger",
+        daggerCompiler: "com.google.dagger:dagger-compiler:$versions.core.dagger"
     ],
     kotlin: [
         stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin.kotlin",
